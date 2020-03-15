@@ -3,7 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package DAO;
+package services;
+
 
 import java.util.List;
 import java.util.Map;
@@ -12,18 +13,22 @@ import java.util.Map;
  *
  * @author kyrik
  */
-public interface DAOInt<T> {
-
+public interface ServiceInt<T> {
+       
     public void create(T obj);
+
+    public void create(List<T> listOfT);
 
     public void delete(T obj);
 
-    public T getById(int id);
-
-    public List<T> getAll();
+    public void delete(List<T> listOfT);
 
     public void update(T obj);
 
-    public List<T> getQueryResult(Map validatedAttributes);
+    public void update(List<T> listOfT);
 
+    public List<T> getAll();
+
+    public boolean isSimilar(T obj);
+    
 }
