@@ -26,23 +26,23 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author kyrik
  */
 @Entity
-@Table(catalog = "EntitiesCRUD", schema = "", uniqueConstraints = {
+@Table(name = "Trainers", catalog = "EntitiesCRUD",  schema = "", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"idTrainer"})})
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Trainers.findAll", query = "SELECT t FROM Trainers t")
+        @NamedQuery(name = "Trainer.findAll", query = "SELECT t FROM Trainer t")
     ,
-               @NamedQuery(name = "Trainers.findByIdTrainer",
-                query = "SELECT t FROM Trainers t WHERE t.idTrainer = :idTrainer")
+               @NamedQuery(name = "Trainer.findByIdTrainer",
+                query = "SELECT t FROM Trainer t WHERE t.idTrainer = :idTrainer")
     ,
-               @NamedQuery(name = "Trainers.findByFirstName",
-                query = "SELECT t FROM Trainers t WHERE t.firstName = :firstName")
+               @NamedQuery(name = "Trainer.findByFirstName",
+                query = "SELECT t FROM Trainer t WHERE t.firstName = :firstName")
     ,
-               @NamedQuery(name = "Trainers.findByLastName",
-                query = "SELECT t FROM Trainers t WHERE t.lastName = :lastName")
+               @NamedQuery(name = "Trainer.findByLastName",
+                query = "SELECT t FROM Trainer t WHERE t.lastName = :lastName")
     ,
-               @NamedQuery(name = "Trainers.findBySubject",
-                query = "SELECT t FROM Trainers t WHERE t.subject = :subject")
+               @NamedQuery(name = "Trainer.findBySubject",
+                query = "SELECT t FROM Trainer t WHERE t.subject = :subject")
 })
 public class Trainer implements Serializable {
 
@@ -77,6 +77,17 @@ public class Trainer implements Serializable {
         this.lastName = lastName;
 
     }
+
+    public Trainer(Integer idTrainer, String firstName, String lastName,
+                   String subject, String tag) {
+        this.idTrainer = idTrainer;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.subject = subject;
+        this.tag = tag;
+    }
+    
+    
 
     public Integer getIdTrainer() {
         return idTrainer;

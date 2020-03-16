@@ -8,9 +8,13 @@ package services;
 import DAO.DAOInt;
 import DAO.TrainerDAO;
 import entities.Trainer;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  *
@@ -66,8 +70,18 @@ public class TrainerServ implements ServiceInt<Trainer> {
                 trainerCheckMapping);
 
         return (queryResult.size() > 0)
-               ? false
-               : true;
+               ? true
+               : false;
+    }
+
+    public List<Trainer> filterBeans(List<Trainer> updatedValues,
+                                     List<Trainer> toBeUpdated) {
+        Set<Integer> ids = updatedValues.stream().map(tr -> tr.getIdTrainer()).
+                collect(Collectors.toSet());
+        return toBeUpdated.stream().
+                filter(tr -> ids.contains(tr.getIdTrainer())).collect(
+                Collectors.toList());
+
     }
 
 }

@@ -40,7 +40,6 @@ public class TrainerDAO implements DAOInt<Trainer> {
         em.getTransaction().begin();
         em.remove(em.find(Trainer.class, tr.getIdTrainer()));
         em.getTransaction().commit();
-        em.close();
     }
 
     @Override
@@ -50,19 +49,22 @@ public class TrainerDAO implements DAOInt<Trainer> {
 
     @Override
     public List<Trainer> getAll() {
-        Query query = em.createNamedQuery("Trainers.findAll", Trainer.class);
+        Query query = em.createNamedQuery("Trainer.findAll", Trainer.class);
         return query.getResultList();
 
     }
 
     @Override
     public void update(Trainer tr) {
+        
         Trainer persistedTr = em.find(Trainer.class, tr.getIdTrainer());
         em.getTransaction().begin();
         persistedTr.setFirstName(tr.getFirstName());
         persistedTr.setLastName(tr.getLastName());
         persistedTr.setSubject(tr.getSubject());
         persistedTr.setTag(tr.getTag());
+        em.getTransaction().commit();
+                
     }
 
     @Override
@@ -71,27 +73,31 @@ public class TrainerDAO implements DAOInt<Trainer> {
 
         int i = 0;
         for (Object a : attr.keySet()) {
-            args[i] = (String) attr.get(a);
+            args[i] = (String) a;
             i++;
         }
         String jpql = buildQuery(args);
         Query query = em.createQuery(jpql, Trainer.class);
+        // Query query = em.createQuery("SELECT t FROM Trainer t WHERE t.firstName = 'KYRIAKOS' and t.lastName = 'KYRIAKIDIS'", Trainer.class);
         for (String a : args) {
+            System.out.println(a + "   " + attr.get(a));
             query.setParameter(a, attr.get(a));
         }
+
         return query.getResultList();
     }
 
     private String buildQuery(String[] args) {
         StringBuilder query = new StringBuilder(
-                "SELECT t FROM Trainers t WHERE t.");
+                "SELECT t FROM Trainer t WHERE t.");
         query = query.append(args[0]).append(" = :").append(args[0]);
         if (args.length > 1) {
             for (int i = 1; i < args.length; i++) {
-                query = query.append("and").append(args[i]).append(" = :").
+                query = query.append(" and t.").append(args[i]).append(" = :").
                         append(args[i]);
             }
         }
+
         return query.toString();
     }
 

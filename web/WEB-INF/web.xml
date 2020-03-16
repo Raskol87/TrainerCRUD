@@ -7,6 +7,9 @@
     <servlet-mapping>
         <servlet-name>Controller</servlet-name>
         <url-pattern>/control</url-pattern>
+        <url-pattern>/viewTrainers</url-pattern>
+        <url-pattern>/deleteTrainers</url-pattern>
+        <url-pattern>/updateTrainers</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
